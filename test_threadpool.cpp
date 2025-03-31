@@ -30,6 +30,9 @@ int main(){
     //提交加法任务到线程沉
     future<int> result1 = pool.enqueue(add, 10,20);
     future<int> result2 = pool.enqueue(multiply ,30,2);
+    future<int> result3 = pool.enqueue(multiply ,30,5);
+    future<int> result3 = pool.enqueue(multiply ,40,5);
+    future<int> 4 = pool.enqueue(multiply ,30,5);
     cout << "在线程运行的过程中还有运行其他程序。。。。" << endl;
     // 获取任务的结果
     std::cout << "Result of add: " << result1.get() << std::endl;
