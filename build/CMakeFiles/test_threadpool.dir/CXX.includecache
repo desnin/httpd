@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/destiny/d/Zhang/c++ project/TinyHttpd/test_threadpool.cpp
+iostream
+-
+chrono
+-
+thread
+-
+vector
+-
+threadpool.h
+/home/destiny/d/Zhang/c++ project/TinyHttpd/threadpool.h
+
+/home/destiny/d/Zhang/c++ project/TinyHttpd/threadpool.h
+vector
+-
+queue
+-
+memory
+-
+thread
+-
+mutex
+-
+condition_variable
+-
+future
+-
+functional
+-
+stdexcept
+-
+

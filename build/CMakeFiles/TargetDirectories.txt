@@ -1,0 +1,3 @@
+/home/destiny/d/Zhang/c++ project/TinyHttpd/build/CMakeFiles/rebuild_cache.dir
+/home/destiny/d/Zhang/c++ project/TinyHttpd/build/CMakeFiles/edit_cache.dir
+/home/destiny/d/Zhang/c++ project/TinyHttpd/build/CMakeFiles/test_threadpool.dir

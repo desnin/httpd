@@ -1,22 +1,28 @@
-#include <stdio.h>
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-#include <ctype.h>
-#include <strings.h>
-#include <string.h>
-#include <sys/stat.h>
-#include <pthread.h>
-#include <sys/wait.h>
-#include <stdlib.h>
-#include <sys/epoll.h>
-#include <iostream>
-#include "threadpool.h"
+#include <stdio.h>  // 引入标准输入输出库，用于输入输出操作
+
+#include <sys/socket.h>      // 包含系统调用socket()所需的头文件
+#include <sys/types.h>       // 包含系统数据类型定义的头文件
+#include <netinet/in.h>      // 包含互联网地址结构定义的头文件
+#include <arpa/inet.h>       // 包含IP地址转换函数的头文件
+#include <unistd.h>          // 包含系统调用read(), write(), close()的头文件
+#include <ctype.h>           // 包含字符处理函数的头文件
+#include <strings.h>         // 包含字符串处理函数的头文件
+#include <string.h>          // 包含字符串处理函数的头文件
+#include <sys/stat.h>        // 包含文件状态获取函数的头文件
+#include <pthread.h>         // 包含线程创建和管理的头文件
+#include <sys/wait.h>        // 包含进程等待函数的头文件
+#include <stdlib.h>          // 包含标准库函数的头文件
+#include <sys/epoll.h>       // 包含epoll事件处理机制的头文件
+#include <iostream>          // 包含C++标准输入输出流的头文件
+#include "threadpool.h"      // 包含自定义线程池的头文件
 
 //宏定义，是否是空格
+// 定义一个宏ISspace，用于判断字符是否为空白字符
+// isspace是一个标准库函数，用于检查传入的字符是否为空白字符（如空格、制表符、换行符等）
+// 这里将传入的字符x强制转换为int类型，因为isspace函数的参数类型是int
 #define ISspace(x) isspace((int)(x))
+// 定义一个宏SERVER_STRING，用于存储HTTP服务器的响应头中的服务器信息
+// 这个字符串包含了服务器的名称和版本号，用于在HTTP响应中告知客户端服务器的相关信息
 #define SERVER_STRING "Server: GuoJ's http/0.1.0\r\n"
 
 //每次收到请求，创建一个线程来处理接受到的请求，把client_sock转成地址作为参数传入pthread_create
@@ -88,15 +94,25 @@ void unimplemented(int);
 // color=gray
 void *accept_request(void* from_client)
 {
+    // 将传入的客户端文件描述符转换为整型
     int client = *(int *)from_client;
+    // 定义缓冲区用于存储读取的数据
     char buf[1024];
+    // 用于存储读取的字节数
     int numchars;
+    // 用于存储HTTP请求方法
     char method[255];
+    // 用于存储请求的URL
     char url[255];
+    // 用于存储文件路径
     char path[512];
+    // 用于循环计数
     size_t i, j;
+    // 用于存储文件状态信息
     struct stat st;
+    // 标志是否需要执行CGI
     int cgi = 0;
+    // 用于存储查询字符串
     char *query_string = NULL;
 
     //读http 请求的第一行数据（request line），把请求方法存进 method 中
